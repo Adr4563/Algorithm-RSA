@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de HTML Gigante</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ejemplo de HTML Gigante</h1>
+        <p>Este es un ejemplo de un archivo HTML bastante extenso que podrías utilizar para diferentes propósitos.</p>
+        <p>El contenido puede incluir múltiples secciones, imágenes, enlaces, listas y otros elementos HTML estándar.</p>
+        <h2>Sección 1</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus euismod nisi id leo pharetra, et ultricies magna sodales.</p>
+        <ul>
+            <li>Elemento de lista 1</li>
+            <li>Elemento de lista 2</li>
+            <li>Elemento de lista 3</li>
+        </ul>
+        <h2>Sección 2</h2>
+        <p>Nullam in purus ac urna sodales lacinia eget id quam. Vestibulum varius, libero et vestibulum ultrices, lorem ipsum consequat ipsum, non laoreet nisl arcu a odio.</p>
+        <ol>
+            <li>Elemento de lista ordenada 1</li>
+            <li>Elemento de lista ordenada 2</li>
+            <li>Elemento de lista ordenada 3</li>
+        </ol>
+        <h2>Sección 3</h2>
+        <p>Suspendisse potenti. Vestibulum sagittis, sapien quis lacinia facilisis, lectus mi efficitur magna, eu luctus magna nulla id ex.</p>
+        <blockquote>
+            <p>Este es un bloque de cita en HTML.</p>
+        </blockquote>
+        <h2>Sección 4</h2>
+        <p>Curabitur semper luctus mauris, ac venenatis risus ultrices ut. Ut non vehicula dolor. Vivamus non convallis ligula, nec ultricies ligula.</p>
+        <p>Nulla ac condimentum metus. Nullam sit amet libero id libero aliquet vulputate.</p>
+    </div>
+    <div class="footer">
+        <p>Derechos reservados &copy; 2024</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Básico</title>
+</head>
+<body>
+    <h1>Título Principal</h1>
+    <p>Este es un párrafo dentro de un archivo HTML básico.</p>
+    <p>Puedes agregar más contenido según sea necesario.</p>
+</body>
+</html>
