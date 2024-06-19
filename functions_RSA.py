@@ -6,12 +6,28 @@ from datetime import datetime
 import time
 import pickle
 
-
-# Path of files CSV
+#    ██████╗██████╗ ██╗██████╗ ████████╗ ██████╗  ██████╗ ██████╗  █████╗ ██████╗ ██╗  ██╗██╗   ██╗
+#   ██╔════╝██╔══██╗██║██╔══██╗╚══██╔══╝██╔═══██╗██╔════╝ ██╔══██╗██╔══██╗██╔══██╗██║  ██║╚██╗ ██╔╝
+#   ██║     ██████╔╝██║██████╔╝   ██║   ██║   ██║██║  ███╗██████╔╝███████║██████╔╝███████║ ╚████╔╝ 
+#   ██║     ██╔══██╗██║██╔═══╝    ██║   ██║   ██║██║   ██║██╔══██╗██╔══██║██╔═══╝ ██╔══██║  ╚██╔╝  
+#   ╚██████╗██║  ██║██║██║        ██║   ╚██████╔╝╚██████╔╝██║  ██║██║  ██║██║     ██║  ██║   ██║   
+#    ╚═════╝╚═╝  ╚═╝╚═╝╚═╝        ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝   ╚═╝   
+                                                                                               
+# Index
+#   - Path of files CSV     
+#   - Others methods
+#   - Numbers primes  
+#   - Message cipher
+#   - Cipher txt file  
+#   - Image cipher
+# Results                                                                                               
+                                                                                               
+#**************************************************************** Path of files CSV
 csv_file_cifrado = './C_and_D_png/files_csv/cifrado.csv'
 csv_file_descifrado = './C_and_D_png/files_csv/descifrado.csv'
 
-#*************** Others Methods ******************#
+
+#**************************************************************** Others methods 
 # Calculate n & phi_n
 def calculate_module(p,q):
     return p*q,(p - 1) * (q - 1)
@@ -26,18 +42,14 @@ def mod_inverse(e, phi_n):
 
 # Publick Key
 def generate_public_key(phi_n):
-    # Genera una clave pública e aleatoria tal que 1 < e < phi_n y gcd(e, phi_n) = 1.
+    # Genera una clave pública e aleatoria tal que 
+    # 1 < e < phi_n y gcd(e, phi_n) = 1.
     e = random.randint(3, phi_n - 1)
     while math.gcd(e, phi_n) != 1:
         e = random.randint(3, phi_n - 1)
     return e
 
-#************************************************#
-
-
-
-
-#***************Numbers Primes*******************#
+#**************************************************************** Numbers primes
 # Numbers Primes
 def generate_prime(max):
     while True:
@@ -65,11 +77,7 @@ def generate_different_primes(max):
         q = generate_prime(max)
     return p, q
 
-#**********************************************#
-
-
-
-#*************** Cipher Message ***************#
+#**************************************************************** Message cipher
 def rsa_cipher(message, e, n):
         ciphertext = []
         for char in message:
@@ -87,10 +95,8 @@ def rsa_decoded(ciphertext, d, n):
         decipher_char = chr(decipher_char_code)
         decoded_text.append(decipher_char)            
     return "".join(decoded_text)
-#***********************************************#
 
-
-#*************** Cipher File TXT ***************#
+#**************************************************************** Cipher txt file
 def cipher_txt(input_file, output_file, e, n):
     
     with open(input_file, 'r', encoding='utf-8') as file:
@@ -114,7 +120,7 @@ def decipher_txt(input_file, output_file, d, n):
         file.write(decoded_message)
     print(f"Archivo TXT descifrado se guarda en {output_file}")
 
-#*********Images Format (PNG/JPG)***************#
+#**************************************************************** Image cipher (PNG/JPG)
 
 def cipher_image(input_image, output_image, output_file,e,n):
     image = Image.open(input_image)
@@ -137,7 +143,8 @@ def cipher_image(input_image, output_image, output_file,e,n):
         data.append([time_taken, pixel, tuple(list_pixel)])
 
             
-        cipher_pixels.append(tuple(list_pixel )) # Primer segmento de pixeles de la fila n
+        cipher_pixels.append(tuple(list_pixel )) 
+        # Primer segmento de pixeles de la fila n
     #  Calcular el "cipher_value"
     #  Public key = 659447
     #  n = 230459
@@ -152,7 +159,7 @@ def cipher_image(input_image, output_image, output_file,e,n):
     new_image.save(output_image)     
     print(f"Imagen cifrada se guarda en:  '{output_image}'")
     
-    # Data int txt
+    # Data in txt
     with open(output_file, 'w') as file:
         for item in cipher_pixels:
             file.write(f"{item}\n")
@@ -219,7 +226,15 @@ def decoded_image(input_image, input_file, output_image, d, n):
         writer.writerows(data1)
     
     print(f"Datos de descifrado guardados en: '{csv_file_descifrado}'")
-#***********************************************#
+
+
+#       ____                  ____      
+#      / __ \___  _______  __/ / /______
+#     / /_/ / _ \/ ___/ / / / / __/ ___/
+#    / _, _/  __(__  ) /_/ / / /_(__  ) 
+#   /_/ |_|\___/____/\__,_/_/\__/____/
+#  
+                                    
 def results():
     max = int(input("Ingresar tamaño (bits): "))
     p, q = generate_different_primes(max)
@@ -237,7 +252,7 @@ def results():
     d = mod_inverse(e, phi_n)
     print(f"Public key: {d}")
     
-    #***************** Message to Cipher ***************************************************#
+    #***************** Message cipher 
     message = "HOLA MUNDO"
     
     ciphertext = rsa_cipher(message, e, n) # We need the Public Key & the module n
@@ -245,19 +260,17 @@ def results():
 
     decoded_text  = rsa_decoded(ciphertext, d, n) # We need the Private Key & the module n
     print(f"cipher message: {decoded_text}") 
-    #***************************************************************************************#
     
-    #***************** File TXT to Cipher **************************************************#
+
+    #***************** Cipher txt file
     cipher_txt('./C_and_D_txt/archivo_html.txt', './C_and_D_txt/resultados/cifrado.txt',  e, n)
     decipher_txt('./C_and_D_txt/resultados/cifrado.txt', './C_and_D_txt/resultados/descifrado.txt', d, n)
     
-    #**************************************************************************************#
     
-    #**************** Image to Cipher Format(PNG/JPG/GIF) *********************************#
+    #***************** Image cipher (PNG/JPG/GIF) 
     cipher_image('./C_and_D_png/box.png', './C_and_D_png/resultados/cifrado.png', './C_and_D_png/files_CD/cifrado_png.txt', e, n)
     decoded_image('./C_and_D_png/resultados/cifrado.png','./C_and_D_png/files_CD/cifrado_png.txt','./C_and_D_png/resultados/descifrado.png', d,n)
     
-    #**************************************************************************************#
       
       
 results()
