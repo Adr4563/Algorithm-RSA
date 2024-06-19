@@ -19,7 +19,7 @@ def generate_prime(max):
             return num
         
 def generate_different_primes(max):
-    p,q = generate_prime(max), generate_prime(max)
+    p, q = generate_prime(max), generate_prime(max)
     # Asegurarse de que p y q son diferentes
     while p == q:
         q = generate_prime(max)
@@ -42,7 +42,7 @@ def generate_public_key(phi_n):
 def rsa_encrypt(message, e, n):
         ciphertext = []
         for char in message:
-            #Characters ASCII
+            # Characters ASCII
             char_code = ord(char)
             encrypted_char = pow(char_code, e, n)
             ciphertext.append(encrypted_char)

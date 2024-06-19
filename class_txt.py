@@ -1,14 +1,15 @@
 from Class_RSA import RSA
 
 class Txt(RSA):
-    def __init__(self, maximo, public_key, private_key):
-        super().__init__(maximo)
+    def init(self, maximo, public_key, private_key):
+        super().init(maximo)
         self.public_key = public_key
         self.private_key = private_key
 
-    def encrypt_txt(self, input_file, output_file):
+    def cipher_txt(self, input_file, output_file):
         with open(input_file, 'r', encoding='utf-8') as file:
             original_content = file.read()
+            
 
         ciphertext = self.encrypt(original_content)
 
