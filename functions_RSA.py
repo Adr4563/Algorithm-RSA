@@ -3,9 +3,13 @@ import math
 from PIL import Image
 import csv
 from datetime import datetime
+import time
+import pickle
 
-csv_file_cifrado = './C_and_D_png/cifrado.csv'
-csv_file_descifrado = './C_and_D_png/descifrado.csv'
+
+# Path of files CSV
+csv_file_cifrado = './C_and_D_png/files_csv/cifrado.csv'
+csv_file_descifrado = './C_and_D_png/files_csv/descifrado.csv'
 
 #*************** Others Methods ******************#
 # Calculate n & phi_n
@@ -64,6 +68,7 @@ def generate_different_primes(max):
 #**********************************************#
 
 
+
 #*************** Cipher Message ***************#
 def rsa_cipher(message, e, n):
         ciphertext = []
@@ -76,12 +81,12 @@ def rsa_cipher(message, e, n):
         return ciphertext
 
 def rsa_decoded(ciphertext, d, n):
-    decipher_text = []
+    decoded_text = []
     for encrypted_char in ciphertext:
-        dechipher_char_code = pow(encrypted_char, d, n)
-        decrypted_char = chr(dechipher_char_code)
-        decipher_text.append(decrypted_char)            
-    return "".join(decipher_text)
+        decipher_char_code = pow(encrypted_char, d, n)
+        decipher_char = chr(decipher_char_code)
+        decoded_text.append(decipher_char)            
+    return "".join(decoded_text)
 #***********************************************#
 
 
@@ -111,75 +116,99 @@ def decipher_txt(input_file, output_file, d, n):
 
 #*********Images Format (PNG/JPG)***************#
 
-def cipher_image(input_image, output_image, e,n):
+def cipher_image(input_image, output_image, output_file,e,n):
     image = Image.open(input_image)
     pixels = list(image.getdata())
+    # print(image.size)
     # print(pixels)     : [(255,255,255),....]
     # print(image.size) : RGBA (255,255,255,255) ||  RGB (255,255,255)
     cipher_pixels = []
     
     data = []
-    id = 0
     for pixel in pixels:
         list_pixel = []
-        timestamp = datetime.now().strftime("%H:%M:%S")
+        timestamp_start = time.time()  
         for value in pixel:
-            cipher_value = pow(value, e, n)  
+            cipher_value = pow(value, e, n)
+            # print(cipher_value)  
             list_pixel.append(cipher_value)
-        
-        if len(pixel) == 4:
-            color = ['Red', 'Green', 'Blue', 'Alpha'][id % 4] 
-        else:
-            color = ['Red', 'Green', 'Blue'][id % 3]
-        
-        data.append([timestamp, color, pixel, tuple(list_pixel)])
+        timestamp_end = time.time()
+        time_taken = (timestamp_end - timestamp_start)
+        data.append([time_taken, pixel, tuple(list_pixel)])
+
             
         cipher_pixels.append(tuple(list_pixel )) # Primer segmento de pixeles de la fila n
-        #  Calculatar el cipher_value
-        #  Public key = 659447
-        #  Example: (255,100,255) => (255**Public-Key[0]) mod public_key[1]
-        #  (255,100,255) => (255**6) mod 5
-        #  (255,100,255) => (100**6) mod 5
-        id = id + 1
+    #  Calcular el "cipher_value"
+    #  Public key = 659447
+    #  n = 230459
+    #  Example: (255,100,255) => (255**659447) mod n
+    #  (255,100,255) => (255**6) mod n
+    #  (255,100,255) => (100**6) mod n
         
     # print(cipher_pixels) : [(255,255,255,255)......]
     new_image = Image.new(image.mode, image.size)
     new_image.putdata(cipher_pixels)
+    # print(list(new_image.getdata()))
     new_image.save(output_image)     
     print(f"Imagen cifrada se guarda en:  '{output_image}'")
+    
+    # Data int txt
+    with open(output_file, 'w') as file:
+        for item in cipher_pixels:
+            file.write(f"{item}\n")
+       
     
     # Data to CSV
     with open(csv_file_cifrado, 'w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
-        writer.writerow(["TimeStamp", "Color", "Pixel_Value", "Ciphered_Value"])
+        writer.writerow(["TimeStamp", "Pixel_Value", "Ciphered_Value"])
         writer.writerows(data)
 
     print(f"Datos de cifrado guardados en: '{csv_file_cifrado}'")
 
-def decoded_image(input_image, output_image, d, n):
+def decoded_image(input_image, input_file, output_image, d, n):
+    # Correct form
+    cipher_pixels_file = []
+    with open(input_file, 'r') as file:
+        for line in file:
+            cipher_values =  line.strip().strip('()').split(', ')
+            pixel = tuple(int(value) for value in cipher_values)
+            cipher_pixels_file.append(pixel)
+        print(cipher_pixels_file)
+    
+    decoded_pixels_file = []
+    data1 = []
+
+    for pixel in cipher_pixels_file:
+        list_pixel = []
+        timestamp_start = time.time()
+        for value in pixel:
+            decoded_value = pow(value, d, n)
+            list_pixel.append(decoded_value)
+        timestamp_end = time.time()
+        time_taken = (timestamp_end - timestamp_start)
+        data1.append([time_taken, pixel, tuple(list_pixel)])
+        decoded_pixels_file.append(tuple(list_pixel))
+        
+    # Wrong Form
     cipher_image = Image.open(input_image)
     cipher_pixels = list(cipher_image.getdata())
     decoded_pixels = []
     data = []
-    id = 0
+    
     for pixel in cipher_pixels:
-        timestamp = datetime.now().strftime("%H:%M:%S")
         list_pixel = []
-        id = 0
+        timestamp_start = time.time()  
         for value in pixel:
             decoded_value = pow(value, d, n)
             list_pixel.append(decoded_value)
-        if len(pixel) == 4:
-            color = ['Red', 'Green', 'Blue', 'Alpha'][id % 4] 
-        else:
-            color = ['Red', 'Green', 'Blue'][id % 3]
-        data.append([timestamp, color, pixel, tuple(list_pixel)])
-        
+        timestamp_end = time.time()
+        time_taken = (timestamp_end - timestamp_start)
+        data.append([time_taken, pixel, tuple(list_pixel)])
         decoded_pixels.append(tuple(list_pixel))
-        id = id + 1 
-
+        
     new_image = Image.new(cipher_image.mode, cipher_image.size)
-    new_image.putdata(decoded_pixels)
+    new_image.putdata(decoded_pixels_file)
     new_image.save(output_image)
     print(f"Imagen descifrada se guarda en: '{output_image}'")
     
@@ -187,7 +216,7 @@ def decoded_image(input_image, output_image, d, n):
     with open(csv_file_descifrado, 'w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         writer.writerow(["TimeStamp", "Color", "Pixel_Value", "Decoded_Values"])
-        writer.writerows(data)
+        writer.writerows(data1)
     
     print(f"Datos de descifrado guardados en: '{csv_file_descifrado}'")
 #***********************************************#
@@ -225,8 +254,8 @@ def results():
     #**************************************************************************************#
     
     #**************** Image to Cipher Format(PNG/JPG/GIF) *********************************#
-    cipher_image('./C_and_D_png/box.png', './C_and_D_png/resultados/cifrado.png', e, n)
-    decoded_image('./C_and_D_png/resultados/cifrado.png', './C_and_D_png/resultados/descifrado.png', d,n)
+    cipher_image('./C_and_D_png/box.png', './C_and_D_png/resultados/cifrado.png', './C_and_D_png/files_CD/cifrado_png.txt', e, n)
+    decoded_image('./C_and_D_png/resultados/cifrado.png','./C_and_D_png/files_CD/cifrado_png.txt','./C_and_D_png/resultados/descifrado.png', d,n)
     
     #**************************************************************************************#
       
