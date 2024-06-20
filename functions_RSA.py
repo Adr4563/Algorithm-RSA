@@ -11,8 +11,7 @@ import pickle
 #   ██║     ██████╔╝ ╚████╔╝ ██████╔╝   ██║   ██║   ██║██║  ███╗██████╔╝███████║██████╔╝███████║ ╚████╔╝ 
 #   ██║     ██╔══██╗  ╚██╔╝  ██╔═══╝    ██║   ██║   ██║██║   ██║██╔══██╗██╔══██║██╔═══╝ ██╔══██║  ╚██╔╝  
 #   ╚██████╗██║  ██║   ██║   ██║        ██║   ╚██████╔╝╚██████╔╝██║  ██║██║  ██║██║     ██║  ██║   ██║   
-#    ╚═════╝╚═╝  ╚═╝   ╚═╝   ╚═╝        ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝   ╚═╝   
-                                                                                                       
+#    ╚═════╝╚═╝  ╚═╝   ╚═╝   ╚═╝        ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝   ╚═╝     
                                                                                                
 # Index
 #   - Path of files CSV     
@@ -160,6 +159,12 @@ def cipher_image(input_image, output_image, output_file,e,n):
     new_image.save(output_image)     
     print(f"Imagen cifrada se guarda en:  '{output_image}'")
     
+    new_image_pixels = list(new_image.getdata())
+    # Agregar la nueva columna a los datos
+    new_data = []
+    for data1, new_pixel in zip(data, new_image_pixels):
+        new_data.append(data1 + [new_pixel])
+        
     # Data in txt
     with open(output_file, 'w') as file:
         for item in cipher_pixels:
@@ -169,8 +174,8 @@ def cipher_image(input_image, output_image, output_file,e,n):
     # Data to CSV
     with open(csv_file_cifrado, 'w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
-        writer.writerow(["TimeStamp", "Pixel_Value", "Ciphered_Value"])
-        writer.writerows(data)
+        writer.writerow(["TimeStamp", "Pixel_Value", "Ciphered_Value","Image_Pixel_Value_"])
+        writer.writerows(new_data)
 
     print(f"Datos de cifrado guardados en: '{csv_file_cifrado}'")
 
@@ -269,7 +274,7 @@ def results():
     
     
     #***************** Image cipher (PNG/JPG/GIF) 
-    cipher_image('./C_and_D_png/box.png', './C_and_D_png/resultados/cifrado.png', './C_and_D_png/files_CD/cifrado_png.txt', e, n)
+    cipher_image('./C_and_D_png/homero.png', './C_and_D_png/resultados/cifrado.png', './C_and_D_png/files_CD/cifrado_png.txt', e, n)
     decoded_image('./C_and_D_png/resultados/cifrado.png','./C_and_D_png/files_CD/cifrado_png.txt','./C_and_D_png/resultados/descifrado.png', d,n)
     
       
