@@ -9,7 +9,7 @@
 # CORRECT FORM to use RSA
 
 
-# Installing packages 📚
+# Installing dependencies 📚
 
 ```
 pip install -r requirements.txt
