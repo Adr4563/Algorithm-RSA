@@ -181,7 +181,7 @@ def decoded_image(input_image, input_file, output_image, d, n):
             cipher_values =  line.strip().strip('()').split(', ')
             pixel = tuple(int(value) for value in cipher_values)
             cipher_pixels_file.append(pixel)
-        print(cipher_pixels_file)
+        # print(cipher_pixels_file)
     
     decoded_pixels_file = []
     data1 = []
@@ -222,7 +222,7 @@ def decoded_image(input_image, input_file, output_image, d, n):
     # Data to CSV
     with open(csv_file_descifrado, 'w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
-        writer.writerow(["TimeStamp", "Color", "Pixel_Value", "Decoded_Values"])
+        writer.writerow(["TimeStamp", "Ciphered_Value", "Pixel_Value"])
         writer.writerows(data1)
     
     print(f"Datos de descifrado guardados en: '{csv_file_descifrado}'")

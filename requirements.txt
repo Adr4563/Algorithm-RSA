@@ -1,2 +1,5 @@
 Pillow
 cryptography
+pandas
+matplotlib
+seaborn
