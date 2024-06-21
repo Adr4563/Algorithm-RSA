@@ -1,4 +1,4 @@
-# Cryptografy_RSA-AES
+# Cryptography_RSA-AES
 
 ### **Content**
   - [Introduction 📖](#introduction-)
