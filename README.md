@@ -1,6 +1,6 @@
 # Criptografy_RSA-AES
 
-### **Contents**
+### **Content**
   - [Introduction 📖](#introduction-)
   - [Algorithm RSA in Image 🖼️](#algorithm-rsa-in-image-)
   - [Intalling packages 📚](#installing-packages-)
