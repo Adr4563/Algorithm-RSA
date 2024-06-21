@@ -2,14 +2,14 @@
 
 ### **Contents**
   - [Introduction 📖](#introduction-)
+  - [Algorithm RSA in Image 🖼️](#algorithm-rsa-in-image-)
   - [Intalling packages 📚](#installing-packages-)
 
-# WRONG FORM to use RSA
+# Algorithm RSA in Image
 
-# CORRECT FORM to use RSA
+![Untitled ‑ Made with FlexClip](https://github.com/Adr4563/Criptografy_RSA-AES/assets/135796378/419c1f35-fdad-49b3-917e-c7f21351b7b1)
 
-
-# Installing dependencies 📚
+# Installing dependencies 🖼️
 
 ```
 pip install -r requirements.txt
